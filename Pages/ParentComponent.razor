@@ -1,0 +1,37 @@
+﻿<label for="displayFormat">展示形式:</label>
+<select id="displayFormat" @bind="SelectedDisplayFormat">
+    <option value="Card">卡片</option>
+    <option value="Table">表格</option>
+    <option value="List">列表</option>
+</select>
+<br/>
+
+ParentComponent:
+<input type="number"
+       
+       @bind="ParentPlayersCount"
+       placeholder="展示玩家数量"/>
+<br>
+
+<div>
+    @if (ParentPlayers != null)
+    {
+        <ChildComponent ParentPlayers="@(ParentPlayers.Take(ParentPlayersCount).ToList())" DisplayFormat="@SelectedDisplayFormat"/>
+    }
+</div>
+@code {
+    private int ParentPlayersCount { get; set; } = 0;
+    private string SelectedDisplayFormat { get; set; } = "Card"; 
+    
+    private List<Player>? ParentPlayers { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ParentPlayers =
+        [
+            new Player { Name = "Player1 from ParentComponent", Health = 100, IsActive = true },
+            new Player { Name = "Player2 from ParentComponent", Health = 80, IsActive = false },
+            new Player { Name = "Player3 from ParentComponent", Health = 50, IsActive = true }
+        ];
+    }
+}

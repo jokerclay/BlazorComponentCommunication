@@ -1,0 +1,88 @@
+﻿AncestorComponent:
+<input type="number"
+       @bind="AncestorPlayersCount"
+       placeholder="展示玩家数量" />
+<br/>
+
+@if (ParentPlayers == null)return;
+@foreach (var player in ParentPlayers)
+{
+<div style="border: 1px solid black; padding: 10px; margin: 5px;" hidden="@(DisplayFormat != "Card")">
+    <p><strong>名称:</strong> @player.Name</p>
+    <p><strong>健康值:</strong> @player.Health</p>
+    <p><strong>是否存活:</strong> @(player.IsActive ? "是" : "否")</p>
+</div>
+
+<ul hidden="@(DisplayFormat != "List")">
+    <li><strong>名称:</strong> @player.Name</li>
+    <li><strong>健康值:</strong> @player.Health</li>
+    <li><strong>是否存活:</strong> @(player.IsActive ? "是" : "否")</li>
+</ul>
+}
+<table style="border-collapse: collapse; margin: 10px;" hidden="@(DisplayFormat != "Table")">
+    @if (ParentPlayers.Count != 0)
+    {
+        <tr>
+            <th style="border: 1px solid black; padding: 5px;">名称</th>
+            <th style="border: 1px solid black; padding: 5px;">健康值</th>
+            <th style="border: 1px solid black; padding: 5px;">是否存活</th>
+        </tr>
+    }
+    @foreach (var player in ParentPlayers)
+    {
+        <tr>
+            <td style="border: 1px solid black; padding: 5px;">@player.Name</td>
+            <td style="border: 1px solid black; padding: 5px;">@player.Health</td>
+            <td style="border: 1px solid black; padding: 5px;">@(player.IsActive ? "是" : "否")</td>
+        </tr>
+    }
+</table>
+
+@* -----------------------------------------------------------------------------------------*@
+@if (AncestorPlayers == null)return;
+@foreach (var player in AncestorPlayers.Take(AncestorPlayersCount))
+{
+<div style="border: 1px solid black; padding: 10px; margin: 5px;" hidden="@(DisplayFormat != "Card")">
+    <p><strong>名称:</strong> @player.Name</p>
+    <p><strong>健康值:</strong> @player.Health</p>
+    <p><strong>是否存活:</strong> @(player.IsActive ? "是" : "否")</p>
+</div>
+
+<ul hidden="@(DisplayFormat != "List")">
+    <li><strong>名称:</strong> @player.Name</li>
+    <li><strong>健康值:</strong> @player.Health</li>
+    <li><strong>是否存活:</strong> @(player.IsActive ? "是" : "否")</li>
+</ul>
+}
+<table style="border-collapse: collapse; margin: 10px;" hidden="@(DisplayFormat != "Table")">
+    @if (AncestorPlayersCount != 0)
+    {
+    <tr>
+            <th style="border: 1px solid black; padding: 5px;">名称</th>
+            <th style="border: 1px solid black; padding: 5px;">健康值</th>
+            <th style="border: 1px solid black; padding: 5px;">是否存活</th>
+    </tr>
+    }
+    @foreach (var player in AncestorPlayers.Take(AncestorPlayersCount))
+    {
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">@player.Name</td>
+        <td style="border: 1px solid black; padding: 5px;">@player.Health</td>
+        <td style="border: 1px solid black; padding: 5px;">@(player.IsActive ? "是" : "否")</td>
+    </tr>
+    }
+</table>
+
+
+@code {
+    [Parameter]
+    public List<Player>? ParentPlayers { get; set; }
+
+    [Parameter]
+    public string DisplayFormat { get; set; } = "Card";
+
+    [CascadingParameter]
+    public List<Player>? AncestorPlayers { get; set; }
+    
+    private int AncestorPlayersCount { get; set; } = 0; 
+}

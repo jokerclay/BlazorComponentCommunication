@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<CascadingValue Value="Players">
+    <ParentComponent/>
+</CascadingValue>
+@code {
+    private List<Player> Players { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        Players = new List<Player>
+        {
+            new() { Name = "Player1 from AncestorComponent", Health = 100, IsActive = true },
+            new() { Name = "Player2 from AncestorComponent", Health = 80, IsActive = false },
+            new() { Name = "Player3 from AncestorComponent", Health = 50, IsActive = true }
+        };
+    }
+}
